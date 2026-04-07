@@ -10,7 +10,7 @@ WORKDIR /app
 EXPOSE 8080
 COPY --from=builder /app /app
 # This env is going to be handled in configmap in k8
-ENV MONGO="true" \
+ENV REDIS_URL="redis://redis:6379" \
     MONGO_URL="mongodb://mongodb:27017/catalogue"
 RUN addgroup -S roboshop && adduser -S roboshop -G roboshop
 RUN chown -R roboshop:roboshop /app
