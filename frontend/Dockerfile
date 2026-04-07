@@ -4,6 +4,8 @@ RUN rm -f /usr/share/nginx/html/index.html
 RUN rm -f /etc/nginx/nginx.conf
 RUN rm -f /etc/nginx/conf.d/default.conf
 
+RUN cd /etc/nginx/conf.d/ && ls
+
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY static /usr/share/nginx/html/
 
