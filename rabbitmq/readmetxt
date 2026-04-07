@@ -1,0 +1,10 @@
+- We are not doing any changes for rabbitmq
+- so that we can run the rabbitmq directly using the docker image provided by rabbitmq
+- we can run the rabbitmq server using the following command
+- `docker run -d \
+     --name rabbitmq \
+     --network roboshop \
+     -e RABBITMQ_DEFAULT_USER=roboshop \
+     -e RABBITMQ_DEFAULT_PASS=roboshop123 \
+     rabbitmq:3`
+- this will start the rabbitmq server on port 4369
