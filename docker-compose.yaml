@@ -1,0 +1,88 @@
+services:
+  mongodb:
+    container_name: mongodb
+    image: maheshbabu22neeli/mongodb:1.2.0
+    build: ./mongodb
+
+  redis:
+    container_name: redis
+    image: redis:7.0
+
+  mysql:
+    container_name: mysql
+    image: maheshbabu22neeli/mysql:1.2.0
+    build: ./mysql
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3
+    environment:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123
+
+  catalogue:
+    container_name: catalogue
+    image: maheshbabu22neeli/catalogue:1.2.0
+    build: ./catalogue
+    depends_on:
+      - mongodb
+
+  user:
+    container_name: user
+    image: maheshbabu22neeli/user:1.2.0
+    build: ./user
+    depends_on:
+    - redis
+    - mongodb
+
+  cart:
+    container_name: cart
+    image: maheshbabu22neeli/cart:1.2.0
+    build: ./cart
+    depends_on:
+    - redis
+    - catalogue
+
+  shipping:
+    container_name: shipping
+    image: maheshbabu22neeli/shipping:1.2.0
+    build: ./shipping
+    depends_on:
+    - mysql
+    - cart
+
+  payment:
+    container_name: payment
+    image: maheshbabu22neeli/payment:1.2.0
+    build: ./payment
+    environment:
+      CART_HOST: "cart"
+      CART_PORT: "8080"
+      USER_HOST: "user"
+      USER_PORT: "8080"
+      AMQP_HOST: "rabbitmq"
+      AMQP_USER: "roboshop"
+      AMQP_PASS: "roboshop123"
+    depends_on:
+    - rabbitmq
+    - cart
+    - user
+
+  frontend:
+    container_name: frontend
+    image: maheshbabu22neeli/frontend:1.2.0
+    build: ./frontend
+    ports:
+    - "80:80"
+    depends_on:
+    - catalogue
+    - user
+    - cart
+    - shipping
+    - payment
+
+networks:
+  default:
+    name: roboshop
+    driver: bridge
+    external: false # we are creating this network manually, so we set this to false

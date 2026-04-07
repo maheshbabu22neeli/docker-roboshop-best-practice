@@ -1,0 +1,5 @@
+- We are not doing any chnages for redis
+- so that we can run the redis directly using the docker image provided by redis
+- we can run the redis server using the following command
+- `docker run --name redis -p 6379:6379 -d redis`
+- this will start the redis server on port 6379
