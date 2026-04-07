@@ -1,6 +1,6 @@
 FROM nginx:1.24.0-alpine3.17-slim
 
-RUN rm /usr/share/nginx/html/index.html /etc/nginx/nginx.conf
+RUN rm /usr/share/nginx/html/index.html /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/proxy_temp && \
@@ -17,10 +17,13 @@ RUN mkdir -p /etc/nginx/ssl/ && \
     chmod -R 755 /etc/nginx/ssl/
 
 RUN touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
+    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid \
+
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY static /usr/share/nginx/html/
+
 USER nginx
+
 CMD ["nginx", "-g", "daemon off;"]
 
 
