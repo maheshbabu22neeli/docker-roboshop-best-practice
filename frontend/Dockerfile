@@ -22,9 +22,7 @@ RUN mkdir -p /etc/nginx/ssl/ && \
     chmod -R 755 /etc/nginx/ssl/
 
 RUN touch /var/run/nginx.pid && \
-    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid \
-
-
+    chown -R nginx:nginx /var/run/nginx.pid /run/nginx.pid
 
 USER nginx
 
