@@ -1,6 +1,6 @@
 FROM nginx:1.24.0-alpine3.17-slim
 
-RUN rm /etc/nginx/nginx.conf
+RUN rm /usr/share/nginx/html/index.html /etc/nginx/nginx.conf
 
 RUN mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/proxy_temp && \
